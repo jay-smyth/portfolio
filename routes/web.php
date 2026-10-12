@@ -1,15 +1,34 @@
 <?php
 
+use App\Http\Controllers\PublicPageController;
+use App\Models\Project;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Public portfolio
+Route::get('/', [PublicPageController::class, 'home'])->name('home');
+Route::get('about', [PublicPageController::class, 'about'])->name('about');
+Volt::route('projects', 'projects.index')->name('projects.index');
+Route::get('projects/{project}', [PublicPageController::class, 'project'])->name('projects.show');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Admin
+Route::get('dashboard', fn () => view('dashboard', [
+    'stats' => [
+        'Projects' => Project::count(),
+        'Published' => Project::published()->count(),
+        'Featured' => Project::featured()->count(),
+        'Tags' => Tag::count(),
+    ],
+    'recent' => Project::latest('updated_at')->take(5)->get(),
+]))->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Volt::route('projects', 'admin.projects.index')->name('projects.index');
+    Volt::route('projects/create', 'admin.projects.form')->name('projects.create');
+    Volt::route('projects/{project}/edit', 'admin.projects.form')->name('projects.edit');
+    Volt::route('tags', 'admin.tags.index')->name('tags.index');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

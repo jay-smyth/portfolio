@@ -61,6 +61,44 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
+/* Rendered markdown (project write-ups, about page) */
+.markdown {
+    @apply space-y-5 leading-relaxed text-zinc-700 dark:text-zinc-300;
+}
+.markdown h2 {
+    @apply pt-4 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white;
+}
+.markdown h3 {
+    @apply pt-2 text-xl font-semibold text-zinc-900 dark:text-white;
+}
+.markdown a {
+    @apply font-medium text-zinc-900 underline underline-offset-4 dark:text-white;
+}
+.markdown strong {
+    @apply font-semibold text-zinc-900 dark:text-white;
+}
+.markdown ul {
+    @apply list-disc space-y-2 pl-6;
+}
+.markdown ol {
+    @apply list-decimal space-y-2 pl-6;
+}
+.markdown blockquote {
+    @apply border-l-4 border-zinc-300 pl-4 italic dark:border-zinc-700;
+}
+.markdown code {
+    @apply rounded bg-zinc-100 px-1.5 py-0.5 text-sm dark:bg-zinc-800;
+}
+.markdown pre {
+    @apply overflow-x-auto rounded-lg bg-zinc-900 p-4 text-sm text-zinc-100;
+}
+.markdown pre code {
+    @apply bg-transparent p-0;
+}
+.markdown img {
+    @apply rounded-lg;
+}
+
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
