@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
             // Must match the port Sail publishes (VITE_PORT in .env).
             port: Number(env.VITE_PORT || 5173),
             strictPort: true,
+            // Listen inside the container, but point the browser at the forwarded localhost port.
+            host: '0.0.0.0',
+            hmr: { host: 'localhost' },
         },
     };
 });
