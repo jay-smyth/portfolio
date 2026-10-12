@@ -10,12 +10,22 @@ A Laravel 12 + Livewire (Volt + Flux) site for showcasing web development projec
 
 ## Getting started (Laravel Sail)
 
-Requires Docker. Run these from WSL:
+You only need Docker; PHP and Composer run inside containers. Run these from WSL, Linux or macOS:
 
 ```bash
+git clone https://github.com/jay-smyth/portfolio.git && cd portfolio
+cp .env.example .env
+
+# Install PHP dependencies without a local PHP install
+docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest \
+    composer install --ignore-platform-reqs
+
 ./vendor/bin/sail up -d
+./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan migrate --seed   # creates the admin user + demo projects
-npm install && npm run build               # or `npm run dev` for hot reload
+./vendor/bin/sail artisan storage:link
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run build            # or `npm run dev` for hot reload
 ```
 
 Then open http://localhost. To reach the admin panel, log in at http://localhost/login with `ADMIN_EMAIL` / `ADMIN_PASSWORD` from `.env` (default `admin@example.com` / `password`). **Change these before deploying.**
@@ -33,3 +43,15 @@ The demo projects come from [DemoProjectSeeder](database/seeders/DemoProjectSeed
 ```bash
 ./vendor/bin/sail artisan test
 ```
+
+GitHub Actions runs the test suite (on SQLite) and a Pint code-style check on every push and pull request to `main`.
+
+## Deploying
+
+On a production server:
+
+- Set `APP_ENV=production`, `APP_DEBUG=false`, the real `APP_URL`, your database credentials and a strong `ADMIN_PASSWORD`.
+- Run `composer install --no-dev --optimize-autoloader`, `php artisan key:generate`, `php artisan migrate --force`, `php artisan db:seed --force` (first deploy only) and `php artisan storage:link`.
+- Run `npm ci && npm run build`, then `php artisan optimize`.
+
+Uploaded images are stored on the `public` disk (`storage/app/public`), so keep that directory on persistent storage.

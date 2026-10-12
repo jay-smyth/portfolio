@@ -10,10 +10,12 @@ on:
       - develop
       - main
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     runs-on: ubuntu-latest
-    environment: Testing
 
     steps:
       - name: Checkout
@@ -22,9 +24,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.4
+          php-version: '8.5'
           tools: composer:v2
-          coverage: xdebug
+          coverage: none
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -33,10 +35,7 @@ jobs:
           cache: 'npm'
 
       - name: Install Node Dependencies
-        run: npm i
-
-      - name: Create SQLite Database
-        run: touch database/database.sqlite
+        run: npm ci
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -50,5 +49,9 @@ jobs:
       - name: Build Assets
         run: npm run build
 
+      # Local tests run against Sail's MySQL; CI uses in-memory SQLite instead.
       - name: Run Tests
         run: ./vendor/bin/phpunit
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'

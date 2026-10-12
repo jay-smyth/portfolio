@@ -1,11 +1,12 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/livewire-starter-kit",
+    "name": "jay-smyth/portfolio",
     "type": "project",
-    "description": "The official Laravel starter kit for Livewire.",
+    "description": "Web developer portfolio built with Laravel, Livewire and Flux.",
     "keywords": [
         "laravel",
-        "framework"
+        "portfolio",
+        "livewire"
     ],
     "license": "MIT",
     "require": {
