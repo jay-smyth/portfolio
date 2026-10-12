@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PublicPageController;
 use App\Models\Project;
 use App\Models\Tag;
@@ -11,6 +12,11 @@ Route::get('/', [PublicPageController::class, 'home'])->name('home');
 Route::get('about', [PublicPageController::class, 'about'])->name('about');
 Volt::route('projects', 'projects.index')->name('projects.index');
 Route::get('projects/{project}', [PublicPageController::class, 'project'])->name('projects.show');
+
+// Blog guides (static Markdown in resources/content/blog)
+Route::get('blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('blog/{guide}', [BlogController::class, 'guide'])->name('blog.guide');
+Route::get('blog/{guide}/{chapter}', [BlogController::class, 'chapter'])->name('blog.chapter');
 
 // Admin
 Route::get('dashboard', fn () => view('dashboard', [

@@ -12,6 +12,7 @@
     $nav = [
         'home' => ['Home', 'home'],
         'projects.index' => ['Projects', 'projects.*'],
+        'blog.index' => ['Blog', 'blog.*'],
         'about' => ['About', 'about'],
     ];
 @endphp

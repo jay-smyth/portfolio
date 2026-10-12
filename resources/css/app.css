@@ -98,6 +98,48 @@ select:focus[data-flux-control] {
 .markdown img {
     @apply rounded-lg;
 }
+.markdown h2,
+.markdown h3 {
+    @apply relative scroll-mt-24;
+}
+.markdown .heading-anchor {
+    @apply absolute -ml-5 w-5 font-normal text-zinc-400 no-underline opacity-0 transition dark:text-zinc-500;
+}
+.markdown :is(h2, h3):hover .heading-anchor,
+.markdown .heading-anchor:focus {
+    @apply opacity-100;
+}
+.markdown table {
+    @apply block w-full overflow-x-auto text-sm;
+}
+.markdown th {
+    @apply border-b border-zinc-300 px-3 py-2 text-left font-semibold text-zinc-900 dark:border-zinc-700 dark:text-white;
+}
+.markdown td {
+    @apply border-b border-zinc-200 px-3 py-2 align-top dark:border-zinc-800;
+}
+.markdown hr {
+    @apply border-zinc-200 dark:border-zinc-800;
+}
+
+/* Blog guides: tips as callouts rather than quotes */
+.markdown-guide blockquote {
+    @apply rounded-r-lg border-zinc-400 bg-zinc-50 py-3 pr-4 not-italic dark:border-zinc-600 dark:bg-zinc-800/50;
+}
+.markdown-guide blockquote > * + * {
+    @apply mt-3;
+}
+
+/* Copy buttons added to code blocks by resources/js/app.js */
+.code-block {
+    @apply relative;
+}
+.code-block [data-copy] {
+    @apply absolute right-2 top-2 rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-300 opacity-0 transition hover:text-white focus:opacity-100;
+}
+.code-block:hover [data-copy] {
+    @apply opacity-100;
+}
 
 /* \[:where(&)\]:size-4 {
     @apply size-4;
