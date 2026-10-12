@@ -8,6 +8,23 @@ A Laravel 12 + Livewire (Volt + Flux) site for showcasing web development projec
 - **Admin panel** at `/dashboard`: create and edit projects (cover image, gallery uploads with captions and ordering, tags, publish/feature toggles, sort order) and manage tags. Admins can preview unpublished projects on the public site.
 - **Single admin account:** public registration is disabled.
 
+## Getting started (Dev Container)
+
+The quickest way to run the project on any machine. You need Docker and VS Code with the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension (GitHub Codespaces works too).
+
+1. Clone the repo and open it in VS Code.
+2. Run **Dev Containers: Reopen in Container**.
+
+The first build takes a few minutes. It sets up PHP 8.5, Node 22 and MySQL 8.4, creates `.env`, installs dependencies, migrates and seeds the database, and builds the assets. Then, in the container terminal:
+
+```bash
+composer dev   # app server, queue worker, logs and Vite hot reload
+```
+
+Open http://localhost:8000 and log in at `/login` with the admin details below. Run tests with `php artisan test`.
+
+The database is kept in a Docker volume between rebuilds, and the dev container never shares containers or volumes with Sail.
+
 ## Getting started (Laravel Sail)
 
 You only need Docker; PHP and Composer run inside containers. Run these from WSL, Linux or macOS:
