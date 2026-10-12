@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'name' => env('PORTFOLIO_NAME', 'Alex Developer'),
+    'name' => env('PORTFOLIO_NAME', 'Jason Smyth'),
 
     'headline' => env('PORTFOLIO_HEADLINE', 'Full-stack web developer'),
 
